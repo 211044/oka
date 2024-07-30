@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Site{% endblock %}</title>
+    <script>
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'U' || e.key === 'u' || e.key === 'S' || e.key === 's')) {
+                e.preventDefault();
+            }
+            if (e.key === 'F12') {
+                e.preventDefault();
+            }
+        });
+
+        (function() {
+            var element = new Image();
+            Object.defineProperty(element, 'id', {
+                get: function() {
+                    throw new Error('開発者ツールの使用は禁止されています。');
+                }
+            });
+            setInterval(function() {
+                console.log(element);
+                console.clear();
+            }, 1000);
+        })();
+    </script>
+</head>
+<body>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

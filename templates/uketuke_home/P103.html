@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>患者名検索 - 受付</title>
+    <script>
+        // 開発者ツールの検証ツールを無効化する
+        document.onkeydown = function (event) {
+            if (event.keyCode === 123) { // F12キーを無効化
+                return false;
+            } else if (event.ctrlKey && event.shiftKey && event.keyCode === 73) { // Ctrl+Shift+Iを無効化
+                return false;
+            }
+        };
+
+        // 右クリックメニューを無効化する
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+        
+        // コンソールログを無効化する
+        console.log = function () {};
+        console.error = function () {};
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 50%;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+            text-align: left;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>患者名検索</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.patlname.label_tag }}
+                {{ form.patlname }}
+            </div>
+            <div class="form-group">
+                {{ form.patfname.label_tag }}
+                {{ form.patfname }}
+            </div>
+            <button type="submit">検索</button>
+        </form>
+        {% if results %}
+            <table>
+                <tr>
+                    <th>患者 ID</th>
+                    <th>患者名</th>
+                    <th>患者姓</th>
+                    <th>保険証記号番号</th>
+                    <th>有効期限</th>
+
+                </tr>
+                {% for patient in results %}
+                <tr>
+                    <td>{{ patient.patid }}</td>
+                    <td>{{ patient.patfname }}</td>
+                    <td>{{ patient.patlname }}</td>
+                    <td>{{ patient.hokenmei }}</td>
+                    <td>{{ patient.hokenexp }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <button type="button" onclick="window.location.href='{% url 'uketuke_home' %}'">戻る</button>
+    </div>
+</body>
+</html>

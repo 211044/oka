@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>電話番号変更確認</title>
+    
+    <script>
+        // 開発者ツールの検証ツールを無効化する
+        document.onkeydown = function (event) {
+            if (event.keyCode === 123) { // F12キーを無効化
+                return false;
+            } else if (event.ctrlKey && event.shiftKey && event.keyCode === 73) { // Ctrl+Shift+Iを無効化
+                return false;
+            }
+        };
+
+        // 右クリックメニューを無効化する
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+        
+        // コンソールログを無効化する
+        console.log = function () {};
+        console.error = function () {};
+    </script>
+    
+</head>
+<body>
+    <h1>電話番号変更確認</h1>
+    <p>新しい電話番号: {{ new_phone }}</p>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="new_phone" value="{{ new_phone }}">
+        <input type="hidden" name="tabyouinid" value="{{ tabyouinid }}">
+        <button type="submit" name="action" value="update">変更を確定する</button>
+    </form>
+    <a href="{% url 'hospital_list' %}" class="btn">戻る</a>
+</body>
+</html>

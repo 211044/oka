@@ -1,0 +1,135 @@
+.body {
+   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+   background-color: #f4f4f4;
+   margin: 0;
+   padding: 0;
+}
+
+
+.container {
+   max-width: 600px;
+   margin: 50px auto;
+   padding: 20px;
+   background-color: #fff;
+   border-radius: 10px;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+/* 全体のスタイル */
+body {
+   font-family: Arial, sans-serif;
+   margin: 0;
+   padding: 0;
+}
+
+
+/* フォームのスタイル */
+form {
+   margin: 20px auto;
+   padding: 20px;
+   max-width: 400px;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+}
+
+
+label {
+   display: block;
+   margin-bottom: 10px;
+}
+
+
+input[type="text"],
+input[type="date"] {
+   width: 100%;
+   padding: 10px;
+   margin-bottom: 15px;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+   box-sizing: border-box; /* ボーダーボックスモデルを使用 */
+}
+
+
+button[type="submit"],
+button[type="button"] {
+   background-color: #4CAF50; /* Green */
+   color: white;
+   padding: 10px 20px;
+   margin-top: 10px;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+   transition: background-color 0.3s; /* ホバーエフェクトのトランジション */
+}
+
+
+button[type="submit"]:hover,
+button[type="button"]:hover {
+   background-color: #45a049;
+}
+
+
+/* 確認画面のスタイル */
+#confirmation {
+   display: none;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+   padding: 20px;
+   margin-top: 20px;
+}
+
+
+#confirmation h2 {
+   margin-top: 0;
+}
+
+
+#confirmation p {
+   margin: 5px 0;
+}
+
+
+#confirmation span {
+   font-weight: bold;
+}
+
+
+#confirmation button {
+   background-color: #4CAF50; /* Green */
+   color: white;
+   padding: 10px 20px;
+   margin-top: 10px;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+   transition: background-color 0.3s; /* ホバーエフェクトのトランジション */
+}
+
+
+#confirmation button:hover {
+   background-color: #45a049;
+}
+
+
+/* エラーメッセージのスタイル */
+#error {
+   display: none;
+   border: 1px solid #f44336; /* Red */
+   border-radius: 5px;
+   padding: 20px;
+   margin-top: 20px;
+   background-color: #f2dede; /* Light Red */
+}
+
+
+#error h2 {
+   margin-top: 0;
+   color: #f44336; /* Red */
+}
+
+
+#error p {
+   margin: 5px 0;
+   color: #f44336; /* Red */
+}

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>保険証期限確認</title>
+    <script>
+        // 開発者ツールの検証ツールを無効化する
+        document.onkeydown = function (event) {
+            if (event.keyCode === 123) { // F12キーを無効化
+                return false;
+            } else if (event.ctrlKey && event.shiftKey && event.keyCode === 73) { // Ctrl+Shift+Iを無効化
+                return false;
+            }
+        };
+
+        // 右クリックメニューを無効化する
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+        
+        // コンソールログを無効化する
+        console.log = function () {};
+        console.error = function () {};
+    </script>
+   <!-- CSSファイルをリンク -->
+   <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>保険証期限確認</h1>
+
+
+<div id="expiredInsurance">
+   <h2>保険証期限が過ぎた患者一覧</h2>
+   <ul id="expiredList"></ul>
+</div>
+
+
+<script>
+   // 仮の患者データ（本来はサーバーから取得）
+   var patients = [
+       { id: 1, name: "山田太郎", insuranceExpiry: "2023-01-15" },
+       { id: 2, name: "田中花子", insuranceExpiry: "2022-11-30" },
+       { id: 3, name: "佐藤健太", insuranceExpiry: "2023-03-10" }
+   ];
+
+
+   // 現在の日付を取得
+   var today = new Date();
+   var todayISO = today.toISOString().split("T")[0];
+
+
+   // 保険証期限が過ぎた患者をフィルタリング
+   var expiredPatients = patients.filter(function(patient) {
+       return patient.insuranceExpiry < todayISO;
+   });
+
+
+   // 保険証期限が過ぎた患者のリストを表示
+   var expiredList = document.getElementById("expiredList");
+   expiredPatients.forEach(function(patient) {
+       var listItem = document.createElement("li");
+       listItem.textContent = "患者ID: " + patient.id + ", 患者名: " + patient.name + ", 保険証期限: " + patient.insuranceExpiry;
+       expiredList.appendChild(listItem);
+   });
+</script>
+</body>
+</html>

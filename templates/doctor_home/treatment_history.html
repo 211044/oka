@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>処置履歴確認</title>
+    <script>
+        // 開発者ツールの検証ツールを無効化する
+        document.onkeydown = function (event) {
+            if (event.keyCode === 123) { // F12キーを無効化
+                return false;
+            } else if (event.ctrlKey && event.shiftKey && event.keyCode === 73) { // Ctrl+Shift+Iを無効化
+                return false;
+            }
+        };
+
+        // 右クリックメニューを無効化する
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+        
+        // コンソールログを無効化する
+        console.log = function () {};
+        console.error = function () {};
+    </script>
+</head>
+<body>
+    <h1>処置履歴確認</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="patient_id">患者ID:</label>
+        <input type="text" id="patient_id" name="patient_id"  title="有効な患者IDを入力してください。">
+        <button type="submit">確認</button>
+    </form>
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <a href="{% url 'doctor_home' %}">戻る</a>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Logout</title>
+    <script>
+        // 開発者ツールの検証ツールを無効化する
+        document.onkeydown = function (event) {
+            if (event.keyCode === 123) { // F12キーを無効化
+                return false;
+            } else if (event.ctrlKey && event.shiftKey && event.keyCode === 73) { // Ctrl+Shift+Iを無効化
+                return false;
+            }
+        };
+
+        // 右クリックメニューを無効化する
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+        
+        // コンソールログを無効化する
+        console.log = function () {};
+        console.error = function () {};
+    </script>
+</head>
+<body>
+    <h2>ログアウト</h2>
+    <a href="{% url 'login_view' %}">Login again</a>
+</body>
+</html>

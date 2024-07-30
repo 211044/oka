@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>患者登録確認</title>
+    <script>
+        // 開発者ツールの検証ツールを無効化する
+        document.onkeydown = function (event) {
+            if (event.keyCode === 123) { // F12キーを無効化
+                return false;
+            } else if (event.ctrlKey && event.shiftKey && event.keyCode === 73) { // Ctrl+Shift+Iを無効化
+                return false;
+            }
+        };
+
+        // 右クリックメニューを無効化する
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+        
+        // コンソールログを無効化する
+        console.log = function () {};
+        console.error = function () {};
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            margin: 20px 0;
+        }
+        label, input[type="text"] {
+            margin-right: 10px;
+        }
+        input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 8px 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        a.btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        a.btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+   <h1>患者登録確認</h1>
+   <form method="post">
+       {% csrf_token %}
+       <input type="hidden" name="patid" value="{{ patid }}">
+       <input type="hidden" name="patfname" value="{{ patfname }}">
+       <input type="hidden" name="patlname" value="{{ patlname }}">
+       <input type="hidden" name="hokenmei" value="{{ hokenmei }}">
+       <input type="hidden" name="hokenexp" value="{{ hokenexp }}">
+       <p>患者ID: {{ patid }}</p>
+       <p>患者名: {{ patfname }}</p>
+       <p>患者姓: {{ patlname }}</p>
+       <p>保険証記号番号: {{ hokenmei }}</p>
+       <p>有効期限: {{ hokenexp }}</p>
+       <button type="submit" name="register">登録</button>
+   </form>
+</body>
+<button onclick="history.back()">戻る</button>
+</html>

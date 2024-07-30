@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>他病院登録エラー</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #333;
+        }
+        p {
+            margin-bottom: 10px;
+        }
+        .btn {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>他病院登録エラー</h2>
+        <p>エラーが発生しました。以下の情報を再確認してください。</p>
+        <ul>
+            <li><strong>他病院 ID:</strong> {{ hospital_id }}</li>
+            <li><strong>他病院名:</strong> {{ hospital_name }}</li>
+            <li><strong>他病院住所:</strong> {{ hospital_address }}</li>
+            <li><strong>他病院電話番号:</strong> {{ hospital_phone }}</li>
+            <li><strong>資本金:</strong> {{ capital }}</li>
+            <li><strong>救急対応:</strong> {{ emergency_support }}</li>
+        </ul>
+        <a href="{% url 'register_hospital' %}" class="btn">戻る</a>
+    </div>
+</body>
+</html>

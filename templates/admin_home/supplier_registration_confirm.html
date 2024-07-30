@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>仕入れ先登録確認</title>
+    <script>
+        // 開発者ツールの検証ツールを無効化する
+        document.onkeydown = function (event) {
+            if (event.keyCode === 123) { // F12キーを無効化
+                return false;
+            } else if (event.ctrlKey && event.shiftKey && event.keyCode === 73) { // Ctrl+Shift+Iを無効化
+                return false;
+            }
+        };
+
+        // 右クリックメニューを無効化する
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+        
+        // コンソールログを無効化する
+        console.log = function () {};
+        console.error = function () {};
+    </script>
+</head>
+<body>
+    <h2>仕入れ先登録確認</h2>
+    <form method="post" action="{% url 'supplier_registration_confirm' %}">
+        {% csrf_token %}
+        
+        <p>仕入れ先 ID: {{ shiireid }}</p>
+        <p>仕入れ先名: {{ shiiremei }}</p>
+        <p>仕入れ先住所: {{ shiireaddress }}</p>
+        <p>仕入れ先電話番号: {{ shiiretel }}</p>
+        <p>資本金: {{ shihonkin }}</p>
+        <p>納期: {{ nouki }}</p>
+
+        <input type="hidden" name="shiireid" value="{{ shiireid }}">
+        <input type="hidden" name="shiiremei" value="{{ shiiremei }}">
+        <input type="hidden" name="shiireaddress" value="{{ shiireaddress }}">
+        <input type="hidden" name="shiiretel" value="{{ shiiretel }}">
+        <input type="hidden" name="shihonkin" value="{{ shihonkin }}">
+        <input type="hidden" name="nouki" value="{{ nouki }}">    
+        <button type="submit">登録</button>
+    </form>
+    <button onclick="history.back()">戻る</button>
+</body>
+</html>

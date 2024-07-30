@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>薬投与指示確認</title>
+    <script>
+        // 開発者ツールの検証ツールを無効化する
+        document.onkeydown = function (event) {
+            if (event.keyCode === 123) { // F12キーを無効化
+                return false;
+            } else if (event.ctrlKey && event.shiftKey && event.keyCode === 73) { // Ctrl+Shift+Iを無効化
+                return false;
+            }
+        };
+
+        // 右クリックメニューを無効化する
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+        
+        // コンソールログを無効化する
+        console.log = function () {};
+        console.error = function () {};
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 50%;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+            text-align: left;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .btn-secondary {
+            background-color: #f0f0f0;
+            color: black;
+        }
+        .btn-secondary:hover {
+            background-color: #ddd;
+        }
+        .message {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        .message.error {
+            border-color: #f44336;
+            background-color: #fddddd;
+        }
+        .message.success {
+            border-color: #4CAF50;
+            background-color: #ddf9dd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>薬投与指示確認</h1>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message {% if message.tags %}{{ message.tags }}{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        <p>患者ID: {{ patient.patid }}</p>
+        <p>患者名: {{ patient.name }}</p>
+
+        <h2>投与指示された薬剤</h2>
+        <table>
+            <tr>
+                <th>薬剤名</th>
+                <th>数量</th>
+                <th>単位</th>
+                <th>操作</th>
+            </tr>
+            {% for prescription in prescriptions %}
+            <tr>
+                <td>{{ prescription.medicinename }}</td>
+                <td>{{ prescription.quantity }}</td>
+                <td>{{ prescription.unit }}</td>
+                <td>
+                    <form method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" name="delete" value="{{ forloop.counter0 }}">削除</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <form method="post" action="{% url 'process_confirmed' %}">
+            {% csrf_token %}
+            <input type="hidden" name="patient_id" value="{{ patient.patid }}">
+            <button type="submit">確定する</button>
+        </form>
+        <button type="button" class="btn-secondary" onclick="history.back()">戻る</button>
+    </div>
+</body>
+</html>

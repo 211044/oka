@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>患者リスト</title>
+    <script>
+        // 開発者ツールの検証ツールを無効化する
+        document.onkeydown = function (event) {
+            if (event.keyCode === 123) { // F12キーを無効化
+                return false;
+            } else if (event.ctrlKey && event.shiftKey && event.keyCode === 73) { // Ctrl+Shift+Iを無効化
+                return false;
+            }
+        };
+
+        // 右クリックメニューを無効化する
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+        
+        // コンソールログを無効化する
+        console.log = function () {};
+        console.error = function () {};
+    </script>
+</head>
+<body>
+   <h1>患者リスト</h1>
+   <ul>
+       {% for patient in patients %}
+           <li>
+               {{ patient.patfname }} {{ patient.patlname }}
+               <a href="{% url 'patient_insurance_edit' %}?patid={{ patient.patid }}">保険証情報を編集</a>
+           </li>
+       {% endfor %}
+   </ul>
+</body>
+</html>

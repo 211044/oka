@@ -1,0 +1,28 @@
+<!-- templates/admin_home/edit_hospital_phone.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>電話番号変更</title>
+</head>
+<body>
+    <h2>電話番号変更</h2>
+    <form action="{% url 'edit_hospital_phone' hospital.tabyouinid %}" method="post">
+        {% csrf_token %}
+        <label for="tabyouintel">新しい電話番号:</label><br>
+        <input type="text" id="tabyouintel" name="phone_number" required><br>
+        <button type="submit" name="action" value="confirm">変更確認</button>
+    </form>
+
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    
+    <a href="{% url 'hospital_list' %}" class="btn">戻る</a>
+</body>
+</html>

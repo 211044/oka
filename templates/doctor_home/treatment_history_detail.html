@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>処置履歴詳細</title>
+    <script>
+        // 開発者ツールの検証ツールを無効化する
+        document.onkeydown = function (event) {
+            if (event.keyCode === 123) { // F12キーを無効化
+                return false;
+            } else if (event.ctrlKey && event.shiftKey && event.keyCode === 73) { // Ctrl+Shift+Iを無効化
+                return false;
+            }
+        };
+
+        // 右クリックメニューを無効化する
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+        
+        // コンソールログを無効化する
+        console.log = function () {};
+        console.error = function () {};
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 50%;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+            text-align: left;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .message {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>処置履歴詳細</h1>
+        <p>患者名: {{ patient.patfname }} {{ patient.patlname }}</p>
+
+        {% if not treatments %}
+            <div class="message">
+                処置がされていません。
+            </div>
+        {% else %}
+            <table>
+                <tr>
+                    <th>薬剤名</th>
+                    <th>数量</th>
+{#                    <th>投与日</th>#}
+                </tr>
+                {% for treatment in treatments %}
+                <tr>
+                    <td>{{ treatment.medicine.medicinename }}</td>
+                    <td>{{ treatment.quantity }}</td>
+                    <!--<td>{{ treatment.date }}</td>-->
+                </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+
+        <a href="{% url 'treatment_history' %}">患者IDを指定する</a>
+        <a href="{% url 'doctor_home' %}">メニューに戻る</a>
+    </div>
+</body>
+</html>

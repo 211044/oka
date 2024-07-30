@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>保険証情報確認</title>
+</head>
+<body>
+    <h1>保険証情報確認</h1>
+    <p>患者名: {{ new_patfname }} {{ new_patlname }}</p>
+    <p>新しい保険証記号番号: {{ new_hokenmei }}</p>
+    <p>新しい有効期限: {{ new_hokenexp }}</p>
+    <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="mode" value="modify">
+        <input type="hidden" name="patid" value="{{ patient.patid }}">
+        <input type="hidden" name="patfname" value="{{ new_patfname }}">
+        <input type="hidden" name="patlname" value="{{ new_patlname }}">
+        <input type="hidden" name="hokenmei" value="{{ new_hokenmei }}">
+        <input type="hidden" name="hokenexp" value="{{ new_hokenexp }}">
+        <button type="submit" name="action" value="update">変更</button>
+    </form>
+</body>
+</html>

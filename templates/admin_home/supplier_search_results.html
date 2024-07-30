@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>仕入れ先検索結果</title>
+    <script>
+        // 開発者ツールの検証ツールを無効化する
+        document.onkeydown = function (event) {
+            if (event.keyCode === 123) { // F12キーを無効化
+                return false;
+            } else if (event.ctrlKey && event.shiftKey && event.keyCode === 73) { // Ctrl+Shift+Iを無効化
+                return false;
+            }
+        };
+
+        // 右クリックメニューを無効化する
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+        
+        // コンソールログを無効化する
+        console.log = function () {};
+        console.error = function () {};
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .btn-secondary {
+            background-color: #f0f0f0;
+            color: black;
+            border: 1px solid #ccc;
+        }
+        .btn-secondary:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>仕入れ先検索結果</h1>
+        {% if messages %}
+            {% for message in messages %}
+                <p style="color: red;">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+        {% if suppliers %}
+            <table border="1">
+                <tr>
+                    <th>仕入れ先ID</th>
+                    <th>仕入れ先名</th>
+                    <th>仕入れ先住所</th>
+                    <th>仕入れ先電話番号</th>
+                    <th>資本金</th>
+                    <th>納期</th>
+                </tr>
+                {% for supplier in suppliers %}
+                <tr>
+                    <td>{{ supplier.shiireid }}</td>
+                    <td>{{ supplier.shiiremei }}</td>
+                    <td>{{ supplier.shiireaddress }}</td>
+                    <td>{{ supplier.shiiretel }}</td>
+                    <td>{{ supplier.shihonkin }}</td>
+                    <td>{{ supplier.nouki }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            
+        {% endif %}
+        <button onclick="window.location.href='{% url 'supplier_list' %}'">仕入れ先一覧に戻る</button>
+    </div>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>保険証情報編集</title>
+    <script>
+        // 開発者ツールの検証ツールを無効化する
+        document.onkeydown = function (event) {
+            if (event.keyCode === 123) { // F12キーを無効化
+                return false;
+            } else if (event.ctrlKey && event.shiftKey && event.keyCode === 73) { // Ctrl+Shift+Iを無効化
+                return false;
+            }
+        };
+
+        // 右クリックメニューを無効化する
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+        
+        // コンソールログを無効化する
+        console.log = function () {};
+        console.error = function () {};
+    </script>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            margin: 20px 0;
+        }
+        label, input[type="text"] {
+            margin-right: 10px;
+        }
+        input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 8px 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        a.btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        a.btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>保険証情報編集</h1>
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {% if errors %}
+        <ul>
+            {% for error in errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <!-- 患者ID検索フォーム -->
+    <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="mode" value="search">
+        <label for="patid">患者ID:</label>
+        <input type="text" id="patid" name="patid">
+        <button type="submit">検索</button>
+    </form>
+
+    {% if patient %}
+    <!-- 保険証情報編集フォーム -->
+    <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="mode" value="modify">
+        <input type="hidden" name="patid" value="{{ patient.patid }}">
+        <label for="patfname">患者名:</label>
+        <input type="text" id="patfname" name="patfname" value="{{ patient.patfname }}">
+        <br>
+        <label for="patlname">患者姓:</label>
+        <input type="text" id="patlname" name="patlname" value="{{ patient.patlname }}">
+        <br>
+        <label for="hokenmei">保険証記号番号:</label>
+        <input type="text" id="hokenmei" name="hokenmei" value="{{ patient.hokenmei }}">
+        <br>
+        <label for="hokenexp">有効期限:</label>
+        <input type="date" id="hokenexp" name="hokenexp" value="{{ patient.hokenexp }}">
+        <br>
+        <button type="submit" name="action" value="confirm">変更確認</button>
+    </form>
+    {% endif %}
+    <button type="button" onclick="window.location.href='{% url 'uketuke_home' %}'">戻る</button>
+</body>
+</html>
